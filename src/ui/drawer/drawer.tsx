@@ -2,7 +2,7 @@ import React from 'react';
 import * as Vaul from 'vaul';
 import classNames from 'classnames';
 import './drawer.css';
-import { Dialog, Theme } from '@radix-ui/themes';
+import { Dialog, ScrollArea, Theme } from '@radix-ui/themes';
 import * as RtHelpers from '@radix-ui/themes/helpers';
 import {
   DrawerContentOwnProps,
@@ -43,7 +43,9 @@ const DrawerContent = React.forwardRef<
           className={classNames('DrawerContent', className)}
           {...contentProps}
         >
-          {children}
+          <ScrollArea>
+            <div className="DrawerContentInner">{children}</div>
+          </ScrollArea>
         </Vaul.Drawer.Content>
       </Theme>
     </Vaul.Drawer.Portal>

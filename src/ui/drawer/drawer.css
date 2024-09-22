@@ -9,20 +9,19 @@ you are responsive for matching its style to custom themes if any.
 }
 
 .DrawerContent {
+  width: 100%;
+  z-index: 50;
   position: fixed;
   left: 0;
   bottom: 0;
   right: 0;
-  z-index: 50;
+
+  display: flex;
+  flex-direction: column;
+  max-height: 96%;
 
   border-top-left-radius: var(--drawer-border-radius);
   border-top-right-radius: var(--drawer-border-radius);
-
-  --inset-padding-top: var(--drawer-content-padding-y);
-  --inset-padding-right: var(--drawer-content-padding-x);
-  --inset-padding-bottom: var(--drawer-content-padding-y);
-  --inset-padding-left: var(--drawer-content-padding-x);
-  padding: var(--drawer-content-padding-y) var(--drawer-content-padding-x);
 
   background-color: var(--color-panel-solid);
   box-shadow: var(--shadow-6);
@@ -31,8 +30,8 @@ you are responsive for matching its style to custom themes if any.
   /* bar */
 
   &::before {
-    position: fixed;
     content: '';
+    position: fixed;
     top: calc(var(--drawer-content-padding-y) / 2);
     left: 50%;
     transform: translate(-50%, -100%);
@@ -41,6 +40,14 @@ you are responsive for matching its style to custom themes if any.
     border-radius: var(--radius-2);
     background-color: var(--gray-6);
   }
+}
+
+.DrawerContentInner {
+  --inset-padding-top: var(--drawer-content-padding-y);
+  --inset-padding-right: var(--drawer-content-padding-x);
+  --inset-padding-bottom: var(--drawer-content-padding-y);
+  --inset-padding-left: var(--drawer-content-padding-x);
+  padding: var(--drawer-content-padding-y) var(--drawer-content-padding-x);
 }
 
 /***************************************************************************************************
@@ -52,21 +59,27 @@ you are responsive for matching its style to custom themes if any.
 @breakpoints {
   .DrawerContent {
     &:where(.rt-r-size-1) {
+      --drawer-content-padding-x: var(--space-3);
+      --drawer-content-padding-y: var(--space-4);
+      --drawer-border-radius: var(--radius-4);
+    }
+
+    &:where(.rt-r-size-2) {
       --drawer-content-padding-x: var(--space-4);
       --drawer-content-padding-y: var(--space-5);
       --drawer-border-radius: var(--radius-4);
     }
 
-    &:where(.rt-r-size-2) {
+    &:where(.rt-r-size-3) {
       --drawer-content-padding-x: var(--space-5);
       --drawer-content-padding-y: var(--space-6);
       --drawer-border-radius: var(--radius-5);
     }
 
-    &:where(.rt-r-size-3) {
+    &:where(.rt-r-size-4) {
       --drawer-content-padding-x: var(--space-6);
       --drawer-content-padding-y: var(--space-7);
-      --drawer-border-radius: var(--radius-6);
+      --drawer-border-radius: var(--radius-5);
     }
   }
 }
