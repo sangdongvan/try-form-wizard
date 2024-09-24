@@ -8,6 +8,7 @@ import {
   DrawerContentOwnProps,
   drawerContentPropDefs,
 } from './drawer.props.ts';
+import * as DialogPrimitive from '@radix-ui/react-dialog';
 
 const DrawerTrigger = Vaul.Drawer.Trigger;
 DrawerTrigger.displayName = 'Drawer.Trigger';
@@ -65,7 +66,16 @@ const DrawerRoot = (
 };
 DrawerRoot.displayName = 'Drawer.Root';
 
-const DrawerTitle = Dialog.Title;
+type DrawerTitleElement = React.ElementRef<typeof DialogPrimitive.Title>;
+type DrawerTitleProps = RtHelpers.ComponentPropsWithout<
+  typeof DialogPrimitive.Title,
+  'asChild'
+>;
+const DrawerTitle = React.forwardRef<DrawerTitleElement, DrawerTitleProps>(
+  (props, forwardedRef) => (
+    <DialogPrimitive.Title {...props} asChild ref={forwardedRef} />
+  ),
+);
 DrawerTitle.displayName = 'Drawer.Title';
 
 export {

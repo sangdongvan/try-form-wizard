@@ -4,11 +4,14 @@ import {
   Dialog,
   Flex,
   Grid,
+  Heading,
   Text,
   TextArea,
   TextField,
 } from '@radix-ui/themes';
 import * as Drawer from './ui/drawer';
+import { WizardFormDemo } from './FormDemo.tsx';
+import React from 'react';
 
 export const dialog1 = (
   <Dialog.Root>
@@ -60,8 +63,12 @@ export const dialog1 = (
 export const drawerContent2 = (
   <Container size="1">
     <Flex direction="column" gap="3">
-      <Drawer.Title>Edit profile</Drawer.Title>
-      <p>
+      <Drawer.Title>
+        <Heading as={'h2'} size="5">
+          Edit profile
+        </Heading>
+      </Drawer.Title>
+      <Text as={'p'}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
         veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
@@ -69,7 +76,7 @@ export const drawerContent2 = (
         velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
         occaecat cupidatat non proident, sunt in culpa qui officia deserunt
         mollit anim id est laborum.
-      </p>
+      </Text>
       <Grid columns="2" gap="2" mt="3">
         <Button variant="surface">Back</Button>
         <Button>Send</Button>
@@ -81,7 +88,11 @@ export const drawerContent2 = (
 export const drawerContent3 = (
   <Container size="1">
     <Flex direction="column" gap="3">
-      <Drawer.Title>Edit profile</Drawer.Title>
+      <Drawer.Title>
+        <Heading as={'h2'} size="5">
+          Edit profile
+        </Heading>
+      </Drawer.Title>
       <Grid gap="1">
         <Text as="div" weight="bold" size="2" mb="1">
           Feedback
@@ -125,7 +136,14 @@ export const drawer3 = (
     <Drawer.Trigger asChild>
       <Button variant="surface">Open Drawer with Form</Button>
     </Drawer.Trigger>
-    <Drawer.Content>{drawerContent3}</Drawer.Content>
+    <Drawer.Content>
+      <Drawer.Title>
+        <Heading as={'h2'} size="5" mb={'3'}>
+          Edit profile
+        </Heading>
+      </Drawer.Title>
+      <WizardFormDemo />
+    </Drawer.Content>
   </Drawer.Root>
 );
 

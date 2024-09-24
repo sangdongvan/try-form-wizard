@@ -4,20 +4,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import {
-  Box,
-  Button,
-  Card,
-  Flex,
-  Grid,
-  Heading,
-  Text,
-  TextField,
-} from '@radix-ui/themes';
+import { Button, Flex, Grid, Heading, Text, TextField } from '@radix-ui/themes';
 import * as Form from '@radix-ui/react-form';
 import * as WizardForm from './ui/wizard-form';
 import { createStepSchema, useWizardFormContext } from './ui/wizard-form';
 import React from 'react';
+import * as Drawer from './ui/drawer';
 
 const FormSchema = createStepSchema({
   account: z.object({
@@ -53,39 +45,33 @@ export function WizardFormDemo() {
   };
 
   return (
-    <Box maxWidth="400px">
-      <Card size="2">
-        <WizardForm.Root schema={FormSchema} form={form} onSubmit={onSubmit}>
-          <WizardForm.Header>
-            <Heading as={'h2'} size={'5'} mb={'3'}>
-              Create your account
-            </Heading>
+    <WizardForm.Root schema={FormSchema} form={form} onSubmit={onSubmit}>
+      <WizardForm.Header>
+        <Drawer.Title>Create your account</Drawer.Title>
 
-            {/*<WizardFormContextProvider>*/}
-            {/*  {({ currentStepIndex }) => (*/}
-            {/*    <Stepper*/}
-            {/*      variant={'numbers'}*/}
-            {/*      steps={['Account', 'Profile', 'Review']}*/}
-            {/*      currentStep={currentStepIndex}*/}
-            {/*    />*/}
-            {/*  )}*/}
-            {/*</WizardFormContextProvider>*/}
-          </WizardForm.Header>
+        {/*<WizardFormContextProvider>*/}
+        {/*  {({ currentStepIndex }) => (*/}
+        {/*    <Stepper*/}
+        {/*      variant={'numbers'}*/}
+        {/*      steps={['Account', 'Profile', 'Review']}*/}
+        {/*      currentStep={currentStepIndex}*/}
+        {/*    />*/}
+        {/*  )}*/}
+        {/*</WizardFormContextProvider>*/}
+      </WizardForm.Header>
 
-          <WizardForm.Step name="account">
-            <AccountStep />
-          </WizardForm.Step>
+      <WizardForm.Step name="account">
+        <AccountStep />
+      </WizardForm.Step>
 
-          <WizardForm.Step name="profile">
-            <ProfileStep />
-          </WizardForm.Step>
+      <WizardForm.Step name="profile">
+        <ProfileStep />
+      </WizardForm.Step>
 
-          <WizardForm.Step name="review">
-            <ReviewStep />
-          </WizardForm.Step>
-        </WizardForm.Root>
-      </Card>
-    </Box>
+      <WizardForm.Step name="review">
+        <ReviewStep />
+      </WizardForm.Step>
+    </WizardForm.Root>
   );
 }
 
