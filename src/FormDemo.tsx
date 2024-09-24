@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm, Controller } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import {
@@ -15,8 +15,9 @@ import {
   TextField,
 } from '@radix-ui/themes';
 import * as Form from '@radix-ui/react-form';
-import { createStepSchema, useWizardFormContext } from './ui/wizard-form';
 import * as WizardForm from './ui/wizard-form';
+import { createStepSchema, useWizardFormContext } from './ui/wizard-form';
+import React from 'react';
 
 const FormSchema = createStepSchema({
   account: z.object({
@@ -135,49 +136,78 @@ function AccountStep() {
         )}
       />
 
-      <Flex justify={'start'}>
+      <Grid columns="2" gap="2">
+        <span aria-hidden={'true'}></span>
         <Button onClick={nextStep} disabled={!isStepValid()}>
           Next
         </Button>
-      </Flex>
+      </Grid>
     </Flex>
   );
 }
 
 function ProfileStep() {
   const {
-    form: { register },
+    form: { control },
     nextStep,
     prevStep,
   } = useWizardFormContext();
 
   return (
-    <div>
-      <div className={'flex flex-col gap-4'}>
-        <Form.Field name="profile.password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control asChild>
-            <input type="password" {...register('profile.password')} />
-          </Form.Control>
-          <Form.Message />
-        </Form.Field>
-      </div>
+    <Flex direction={'column'} gap={'3'}>
+      <Controller
+        name="profile.password"
+        control={control}
+        render={({ field, fieldState }) => (
+          <Form.Field name={field.name}>
+            <Grid gap={'1'}>
+              <Form.Label asChild>
+                <Text weight="bold" size="2">
+                  Password
+                </Text>
+              </Form.Label>
+              <Form.Control asChild>
+                <TextField.Root type={'password'} {...field}></TextField.Root>
+              </Form.Control>
+              {fieldState.error && <Form.Message />}
+            </Grid>
+          </Form.Field>
+        )}
+      />
 
-      <Form.Field name="profile.age">
-        <Form.Label>Age</Form.Label>
-        <Form.Control asChild>
-          <input {...register('profile.age')} />
-        </Form.Control>
-        <Form.Message />
-      </Form.Field>
+      <Controller
+        name="profile.age"
+        control={control}
+        render={({ field, fieldState }) => {
+          const filledInputProps = { ...field, value: field.value ?? '' };
+          return (
+            <Form.Field name={field.name}>
+              <Grid gap={'1'}>
+                <Form.Label asChild>
+                  <Text weight="bold" size="2">
+                    Age
+                  </Text>
+                </Form.Label>
+                <Form.Control asChild>
+                  <TextField.Root
+                    type={'number'}
+                    {...filledInputProps}
+                  ></TextField.Root>
+                </Form.Control>
+                {fieldState.error && <Form.Message />}
+              </Grid>
+            </Form.Field>
+          );
+        }}
+      />
 
-      <div className="flex justify-end space-x-2">
-        <Button type={'button'} variant={'outline'} onClick={prevStep}>
+      <Grid columns="2" gap="2">
+        <Button variant={'surface'} onClick={prevStep}>
           Previous
         </Button>
         <Button onClick={nextStep}>Next</Button>
-      </div>
-    </div>
+      </Grid>
+    </Flex>
   );
 }
 
@@ -186,10 +216,10 @@ function ReviewStep() {
   const values = form.getValues();
 
   return (
-    <div className={'flex flex-col space-y-4'}>
-      <div className={'flex flex-col space-y-4'}>
+    <Flex direction={'column'} gapY={'3'}>
+      <Flex direction={'column'} gapY={'3'}>
         <div>Great! Please review the values.</div>
-        <div className={'flex flex-col space-y-2 text-sm'}>
+        <Flex direction={'column'} gapY={'2'}>
           <div>
             <span>Username</span>: <span>{values.account.username}</span>
           </div>
@@ -199,16 +229,15 @@ function ReviewStep() {
           <div>
             <span>Age</span>: <span>{values.profile.age}</span>
           </div>
-        </div>
-      </div>
+        </Flex>
+      </Flex>
 
-      <div className="flex justify-end space-x-2">
-        <Button type={'button'} variant={'outline'} onClick={prevStep}>
+      <Grid columns="2" gap="2">
+        <Button variant={'outline'} onClick={prevStep}>
           Back
         </Button>
-
         <Button type={'submit'}>Create Account</Button>
-      </div>
-    </div>
+      </Grid>
+    </Flex>
   );
 }

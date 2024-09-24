@@ -1,0 +1,7 @@
+.StepContainer {
+  position: relative;
+}
+
+.StepContent--hide {
+  position: absolute;
+}
